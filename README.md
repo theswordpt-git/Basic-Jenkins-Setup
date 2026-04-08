@@ -23,9 +23,10 @@ First, clone this repository to your local machine using Git, and navigate into 
 
 For Terraform to successfully authenticate and provision your resources, the private key path in the configuration must match the actual location of your private key on your local machine.
 
-1. Open the Terraform configuration files (e.g., 'basic-server.tf').
+1. Open the Terraform configuration files (e.g., `basic-server.tf`).
 2. Locate the section where the private key file path is defined.
 3. **Change the private key file path** in the Terraform file to match the exact location and name of your local private key (e.g., `YourPrivateKey.pem`), OR rename/move your local key to match what is currently written in the Terraform file.
+4. (Optional) Change the plugins.xml location from this repo to your own in user-data.sh
 
 *⚠️ **Security Warning**: Never place your actual private key file directly inside this repository or commit it to version control.*
 
