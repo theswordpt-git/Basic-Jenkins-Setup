@@ -4,7 +4,7 @@ This repository contains Terraform configuration files for provisioning a basic 
 
 ## Prerequisites
 
-To use this repository, you **must** have Terraform installed on your local machine, and AWSCLI configured. 
+To use this repository, you **must** have Terraform installed on your local machine, a SSH key configured on AWS, and AWSCLI configured. 
 
 * [Download and Install Terraform](https://developer.hashicorp.com/terraform/downloads)
 
