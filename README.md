@@ -17,6 +17,7 @@ Follow these steps to set up and deploy the infrastructure:
 First, clone this repository to your local machine using Git, and navigate into the project directory:
 
     git clone https://github.com/theswordpt-git/Basic-Jenkins-Setup
+    cd Basic-Jenkins-Setup
  
 
 ### 2. Update the Private Key
