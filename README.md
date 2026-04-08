@@ -1,10 +1,10 @@
-# Basic Jenkins Server Setup
+# Basic Jenkins Server Setup in AWS
 
 This repository contains Terraform configuration files for provisioning a basic Jenkins server.
 
 ## Prerequisites
 
-To use this repository, you **must** have Terraform installed on your local machine. 
+To use this repository, you **must** have Terraform installed on your local machine, and AWSCLI configured. 
 
 * [Download and Install Terraform](https://developer.hashicorp.com/terraform/downloads)
 
