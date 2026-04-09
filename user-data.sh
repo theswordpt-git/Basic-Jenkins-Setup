@@ -64,11 +64,12 @@ curl -fLs -o /tmp/jenkins-plugin-manager.jar \
 
 curl -fLs -o /tmp/plugins.yaml \
   https://github.com/theswordpt-git/Basic-Jenkins-Setup/raw/refs/heads/main/plugins.yaml
-
- -u jenkins java -jar /tmp/jenkins-plugin-manager.jar \
+  
+sudo -u jenkins java -jar /tmp/jenkins-plugin-manager.jar \
   --war /usr/share/java/jenkins.war \
   --plugin-download-directory /var/lib/jenkins/plugins \
   --plugin-file /tmp/plugins.yaml
+
 
 
 
