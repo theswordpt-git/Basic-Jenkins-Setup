@@ -12,3 +12,4 @@ plugins:
   - artifactId: "terraform"
     source:
       version: "1.0.10"
+  - artifactId: "aws-java-sdk"
