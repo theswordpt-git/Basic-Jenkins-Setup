@@ -13,3 +13,4 @@ plugins:
     source:
       version: "1.0.10"
   - artifactId: "aws-java-sdk"
+  - artifactId: "configuration-as-code"
