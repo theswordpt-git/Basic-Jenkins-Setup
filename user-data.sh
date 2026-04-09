@@ -64,21 +64,68 @@ curl -fLs -o /tmp/jenkins-plugin-manager.jar \
 
 curl -fLs -o /tmp/plugins.yaml \
   https://github.com/theswordpt-git/Basic-Jenkins-Setup/raw/refs/heads/main/plugins.yaml
-  
+
 sudo -u jenkins java -jar /tmp/jenkins-plugin-manager.jar \
   --war /usr/share/java/jenkins.war \
   --plugin-download-directory /var/lib/jenkins/plugins \
   --plugin-file /tmp/plugins.yaml
 
 
+# -------------------------------------------
+#  Install Snyk in Manage -> Tools automatically
+# -------------------------------------------
+JENKINS_HOME="/var/lib/jenkins"
+CASC_DIR="$JENKINS_HOME/casc_configs"
+mkdir -p $CASC_DIR
+
+cat <<EOF > $CASC_DIR/jenkins.yaml
+tool:
+  snyk:
+    installations:
+      - name: "snyk"
+        properties:
+          - installSource:
+              installers:
+                - snykInstaller:
+                    version: "latest"
+EOF
+
+
+#none of these worked, but directly injecting the path into the service file does :(
+
+# 4. Tell Jenkins where to find the configuration
+#echo "export CASC_JENKINS_CONFIG=$CASC_DIR/jenkins.yaml" >> /etc/profile
+#echo "CASC_JENKINS_CONFIG=$CASC_DIR/jenkins.yaml" >> /etc/environment
+#echo "export CASC_JENKINS_CONFIG=$CASC_DIR/jenkins.yaml" > /etc/profile.d/jenkins_env.sh
+#chmod +x /etc/profile.d/jenkins_env.sh
+#echo 'Environment="CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs/jenkins.yaml"' | sudo tee -a /lib/systemd/system/jenkins.service
+
+
+
+SERVICE_FILE="/lib/systemd/system/jenkins.service"
+
+# The line to add to the [Service] section
+LINE='Environment="CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs/jenkins.yaml"'
+
+# Check if the line already exists in the service file
+if ! grep -q "$LINE" "$SERVICE_FILE"; then
+    # Insert the line after [Service] section if it's not already present
+    sed -i '/^\[Service\]/a '"$LINE" "$SERVICE_FILE"
+    echo "Line added to $SERVICE_FILE"
+else
+    echo "Line already exists in $SERVICE_FILE"
+fi
+
+# 5. Ensure permissions are correct for the jenkins user
+chown -R jenkins:jenkins $JENKINS_HOME
 
 
 # --------------------------------------
 # Start the Jenkins service
 # --------------------------------------
 
- systemctl start jenkins
- 
- 
- 
- 
+# Reload systemd to apply changes
+systemctl daemon-reload
+
+#actually start jenkins
+systemctl start jenkins
